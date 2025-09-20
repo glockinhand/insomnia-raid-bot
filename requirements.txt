@@ -1,0 +1,5 @@
+discord.py
+requests
+aiohttp
+colorama
+Pillow
