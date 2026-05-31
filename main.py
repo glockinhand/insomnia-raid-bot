@@ -1257,8 +1257,13 @@ async def spoof_image(interaction: discord.Interaction, username: str, message: 
     if not avatar_url:
         avatar_url = "https://cdn.discordapp.com/embed/avatars/0.png"
 
-    response = requests.get(avatar_url)
-    avatar = Image.open(BytesIO(response.content)).convert("RGBA")
+    try:
+        response = requests.get(avatar_url, timeout=10)
+        response.raise_for_status()
+        avatar = Image.open(BytesIO(response.content)).convert("RGBA")
+    except Exception as e:
+        await interaction.followup.send(f"❌ Failed to fetch avatar: {e}", ephemeral=True)
+        return
     avatar = avatar.resize((40, 40), Image.LANCZOS)
 
     mask = Image.new("L", avatar.size, 0)
@@ -1271,9 +1276,14 @@ async def spoof_image(interaction: discord.Interaction, username: str, message: 
     img = Image.new("RGBA", (width, height), "#36393F")
     draw = ImageDraw.Draw(img)
 
-    font_bold = ImageFont.truetype("arialbd.ttf", 18)
-    font_regular = ImageFont.truetype("arial.ttf", 16)
-    font_timestamp = ImageFont.truetype("arial.ttf", 12)
+    try:
+        font_bold = ImageFont.truetype("arialbd.ttf", 18)
+        font_regular = ImageFont.truetype("arial.ttf", 16)
+        font_timestamp = ImageFont.truetype("arial.ttf", 12)
+    except OSError:
+        font_bold = ImageFont.load_default()
+        font_regular = ImageFont.load_default()
+        font_timestamp = ImageFont.load_default()
 
     img.paste(avatar, (20, 20), avatar)
     now = random_time_today().strftime("Today at %I:%M %p").lstrip("0").replace(" 0", " ")
