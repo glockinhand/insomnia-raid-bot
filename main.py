@@ -153,8 +153,14 @@ def update_leaderboard(user_id: int, command_name: str):
         json.dump(data, f, indent=4)
 
 def save_token(token):
+    try:
+        with open("config.json", "r") as file:
+            existing = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        existing = {}
+    existing["TOKEN"] = token
     with open("config.json", "w") as file:
-        json.dump({"TOKEN": token}, file)
+        json.dump(existing, file, indent=2)
 
 def load_token():
     try:
