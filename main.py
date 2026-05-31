@@ -404,7 +404,7 @@ async def createlogger(
     await interaction.response.defer(ephemeral=True, thinking=True)
 
     if not is_premium_user(interaction.user.id):
-        await interaction.response.send_message("💎 This command is only available for premium users.", ephemeral=True)
+        await interaction.followup.send("💎 This command is only available for premium users.", ephemeral=True)
         return
 
     try:
