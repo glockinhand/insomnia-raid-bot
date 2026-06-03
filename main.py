@@ -1,4 +1,4 @@
-# made by a100 (https://github.com/glockinhand)
+# made by gih (https://github.com/glockinhand)
 # there might be lots of code that isnt even used anymore i was too lazy to remove it
 import os
 import re
