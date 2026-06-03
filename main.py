@@ -759,7 +759,7 @@ async def hack(interaction: discord.Interaction, user: discord.User):
         "stealer_logs_240520.txt",
         "stealer_base202401.db",
         "breach_base_01_03_2021.txt",
-        "breach_logs_2025.txt"
+        "breach_logs_2025.txt",
         "stealer_base_23.04.2025.txt",
         "stealer_base_11.10.2022.db",
         "stealer_logs_240520.txt",
